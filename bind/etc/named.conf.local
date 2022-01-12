@@ -1,0 +1,9 @@
+zone "ccdrew.cc." {
+    type master;
+    file "/var/cache/bind/ccdrew.cc";
+    notify yes;
+    allow-transfer { "none"; };
+    update-policy {
+        grant drewcckey. name _acme-challenge.ccdrew.cc. txt;
+    };
+};

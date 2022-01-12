@@ -1,0 +1,19 @@
+logging {
+    channel stdout {
+        stderr;
+        severity info;
+        print-category yes;
+        print-severity no;
+        print-time yes;
+    };
+    channel querylog {
+        file "/var/log/bind/bind.log" versions 3 size 10m;
+        #file "/var/log/bind/bind.log";
+        severity dynamic;
+        print-time yes;
+    };
+	# Customize categories as needed
+    # To log everything, keep at least "default"
+    category default  { stdout; };
+    category queries  { querylog; };
+};

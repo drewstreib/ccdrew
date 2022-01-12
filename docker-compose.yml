@@ -1,0 +1,26 @@
+version: '2.1'
+services:
+  bind:
+    image: ventz/bind
+    container_name: bind
+    restart: unless-stopped
+    #network_mode: host
+    volumes:
+      - /opt/docker/bind/etc:/etc/bind
+      - /opt/docker/bind/cache/:/var/cache/bind
+      - /opt/docker/bind/log/:/var/log/bind
+    environment:
+      - BIND_LOG=-f
+    ports:
+      - "53:53"
+      - "53:53/udp"
+  fastapi:
+    image: tiangolo/uvicorn-gunicorn-fastapi:python3.8-slim
+    container_name: fastapi
+    restart: unless-stopped
+    volumes:
+      - /opt/docker/bind/log/:/bindlog
+      - /opt/docker/fastapi:/app
+    ports:
+      - "8001:80"
+
